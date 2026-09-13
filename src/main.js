@@ -37,7 +37,8 @@ const trickMs = () => SPEED_TRICK[prefs.options.speed] ?? 950;
 
 // ------------------------------------------------------------------ 渲染
 
-function render({ trick = game.currentTrick, selectable = true } = {}) {
+function render({ trick = game.currentTrick, selectable, dim = false } = {}) {
+  if (selectable === undefined) selectable = game.phase === 'playing' || game.phase === 'bury';
   const ctx = game.ctx || makeTrump(null, game.level || '2', prefs.options.constTwo);
   view.renderSeats(game, { humanSeat: HUMAN, turnSeat: game.turnSeat });
   view.renderTrick(trick, ctx);
@@ -45,7 +46,7 @@ function render({ trick = game.currentTrick, selectable = true } = {}) {
   view.renderScore(game, HUMAN);
   const hand = game.hands ? sortHand(game.hands[HUMAN], ctx) : [];
   view.renderHand(hand, ctx, {
-    selectable,
+    selectable, dim,
     onToggle: toggleCard,
     onDouble: (card) => { view.selected.clear(); view.selected.add(card.id); view.refreshSelection(); submit(); },
     onRange: selectRange,
@@ -62,9 +63,11 @@ function toggleCard(card) {
 }
 
 /** 右键：拾取或放回同花色（或主牌）中以左的所有牌，与原版一致。 */
-function selectRange(card, index) {
+function selectRange(card) {
   const ctx = game.ctx;
   const hand = sortHand(game.hands[HUMAN], ctx);
+  const index = hand.findIndex((c) => c.id === card.id);
+  if (index < 0) return;
   const g = ctx.groupOf(card);
   let start = index;
   while (start > 0 && ctx.groupOf(hand[start - 1]) === g) start--;
@@ -253,7 +256,7 @@ async function doPlaying() {
     }
     if (game.tricks.length > before) {
       const t = game.tricks[game.tricks.length - 1];
-      render({ trick: t, selectable: false });
+      render({ trick: t, selectable: false, dim: true });
       const mine = TEAM(t.winner) === TEAM(HUMAN);
       view.flashBanner(`${SEAT_SHORT[t.winner]}家得这一墩${t.points ? ` · ${t.points} 分` : ''}`, Math.max(400, trickMs() - 120));
       if (t.points > 0) mine ? sfx.win() : sfx.lose();

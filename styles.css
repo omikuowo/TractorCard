@@ -13,7 +13,7 @@
   --panel-hi: #1c3a44;
   --text: #edeade;
   --muted: #9fb2b2;
-  --card-w: clamp(50px, 6.2vw, 82px);
+  --card-w: clamp(66px, 8vw, 108px);
   --card-h: calc(var(--card-w) * 1.4);
   --radius: 10px;
   color-scheme: dark;
@@ -95,10 +95,11 @@ button { font: inherit; color: inherit; cursor: pointer; }
 .seat-east  { right: 16px; top: 50%; transform: translateY(-50%); }
 
 .centre {
-  position: absolute; inset: 25% 24% 23%; display: grid; place-items: center;
+  position: absolute; inset: 21% 20% 19%; display: grid; place-items: center;
 }
 .board { position: relative; width: 100%; height: 100%; }
-.board .slot { position: absolute; display: flex; gap: 2px; }
+.board .slot { position: absolute; display: flex; }
+.board .slot .card + .card { margin-left: calc(var(--card-w) * -0.28); }
 .board .slot[data-seat="2"] { top: 0; left: 50%; transform: translateX(-50%); }
 .board .slot[data-seat="0"] { bottom: 0; left: 50%; transform: translateX(-50%); }
 .board .slot[data-seat="1"] { left: 0; top: 50%; transform: translateY(-50%); }
@@ -113,10 +114,10 @@ button { font: inherit; color: inherit; cursor: pointer; }
 @keyframes pop { from { transform: translate(-50%,-50%) scale(.85); opacity: 0; } }
 
 .kitty[hidden], .trick-banner[hidden] { display: none !important; }
-.kitty { position: absolute; top: -4%; right: -14%; text-align: center; }
+.kitty { position: absolute; top: 10px; right: 16px; text-align: center; z-index: 2; }
 .kitty-label { font-size: .74rem; color: var(--muted); margin-bottom: 3px; }
 .kitty-cards { display: flex; }
-.kitty-cards .card { margin-left: -58%; }
+.kitty-cards .card { margin-left: calc(var(--card-w) * -0.58); }
 .kitty-cards .card:first-child { margin-left: 0; }
 
 .scoreboard {
@@ -148,7 +149,7 @@ button { font: inherit; color: inherit; cursor: pointer; }
 
 /* ------------------------------------------------------------ 牌 */
 .card {
-  width: var(--card-w); height: var(--card-h);
+  width: var(--card-w); height: calc(var(--card-w) * 1.4);
   border-radius: var(--radius); flex: none;
   background: #fffef9 center/cover no-repeat;
   box-shadow: 0 2px 5px rgba(0,0,0,.45);
@@ -156,14 +157,14 @@ button { font: inherit; color: inherit; cursor: pointer; }
   transition: transform .13s ease, box-shadow .13s ease, filter .13s ease;
 }
 .card.back { background-image: var(--back-image); filter: var(--back-filter, none); }
-.card.mini { --card-w: clamp(20px, 2.3vw, 31px); }
-.board .card { --card-w: clamp(34px, 4.2vw, 56px); }
+.card.mini { --card-w: clamp(30px, 3.4vw, 46px); }
+.board .card { --card-w: clamp(58px, 7vw, 96px); }
 
-.hand { display: flex; justify-content: center; align-items: flex-end; padding: 10px 8px 0; min-height: calc(var(--card-h) + 24px); }
-.hand .card { margin-left: calc(var(--card-w) * -0.52); cursor: pointer; }
+.hand { display: flex; justify-content: center; align-items: flex-end; padding: 10px 8px 0; min-height: calc(var(--card-h) + 20px); }
+.hand .card { margin-left: var(--overlap, calc(var(--card-w) * -0.52)); cursor: pointer; }
 .hand .card:first-child { margin-left: 0; }
-.hand .card.group-start { margin-left: calc(var(--card-w) * -0.20); }
-.hand .card:hover { transform: translateY(-9px); box-shadow: 0 8px 18px rgba(0,0,0,.5); z-index: 3; }
+.hand .card.group-start { margin-left: calc(var(--overlap, calc(var(--card-w) * -0.52)) + 15px); }
+.hand.interactive .card:hover { transform: translateY(-9px); box-shadow: 0 8px 18px rgba(0,0,0,.5); z-index: 3; }
 .hand .card.selected { transform: translateY(-22px); box-shadow: 0 12px 22px rgba(0,0,0,.55), 0 0 0 2px var(--gold); z-index: 4; }
 .hand .card.dimmed { filter: brightness(.62) saturate(.7); }
 
@@ -222,7 +223,7 @@ button { font: inherit; color: inherit; cursor: pointer; }
 .big-result { text-align: center; font-size: 1.35rem; color: var(--gold); margin: 4px 0 12px; letter-spacing: 2px; }
 
 @media (max-width: 820px) {
-  :root { --card-w: clamp(38px, 9vw, 58px); }
+  :root { --card-w: clamp(46px, 12vw, 70px); }
   .centre { inset: 16% 10%; }
   .scoreboard { font-size: .74rem; min-width: 0; padding: 7px 9px; }
   .brand span { display: none; }

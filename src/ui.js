@@ -68,6 +68,7 @@ export class TableView {
     this.banner = $('#trickBanner');
     this.kitty = $('#kitty');
     this.selected = new Set();
+    this._handlers = {};
     this.applyBack();
   }
 
@@ -91,27 +92,46 @@ export class TableView {
 
   // -------------------------------------------------------------- 手牌
 
-  renderHand(cards, ctx, { selectable = true, onToggle, onDouble, onRange } = {}) {
-    this.hand.innerHTML = '';
+  renderHand(cards, ctx, { selectable = true, dim = false, onToggle, onDouble, onRange } = {}) {
+    this._handlers = { onToggle, onDouble, onRange };
     this._handCards = cards;
     const face = this.prefs.face;
+    // 增量更新：复用已有的牌元素，避免发牌过程中整排重建导致悬停闪烁。
+    const existing = new Map();
+    for (const n of [...this.hand.children]) if (n.dataset.id) existing.set(n.dataset.id, n);
+
     let prevGroup = null;
-    cards.forEach((card, i) => {
+    cards.forEach((card) => {
+      let n = existing.get(card.id);
+      if (n && n.dataset.face === face) existing.delete(card.id);
+      else {
+        if (n) { n.remove(); existing.delete(card.id); }
+        n = cardNode(card, { faceStyle: face });
+        n.dataset.face = face;
+        n.addEventListener('click', (e) => { e.preventDefault(); this._handlers.onToggle?.(card); });
+        n.addEventListener('dblclick', (e) => { e.preventDefault(); this._handlers.onDouble?.(card); });
+        n.addEventListener('contextmenu', (e) => { e.preventDefault(); this._handlers.onRange?.(card); });
+      }
       const g = ctx ? ctx.groupOf(card) : card.suit;
-      const n = cardNode(card, { faceStyle: face });
-      if (prevGroup !== null && g !== prevGroup) n.classList.add('group-start');
+      n.classList.toggle('group-start', prevGroup !== null && g !== prevGroup);
       prevGroup = g;
-      if (this.selected.has(card.id)) n.classList.add('selected');
-      if (selectable) {
-        n.addEventListener('click', (e) => { e.preventDefault(); onToggle && onToggle(card); });
-        n.addEventListener('dblclick', (e) => { e.preventDefault(); onDouble && onDouble(card); });
-        n.addEventListener('contextmenu', (e) => {
-          e.preventDefault();
-          onRange && onRange(card, i, e.detail >= 2);
-        });
-      } else n.classList.add('dimmed');
-      this.hand.appendChild(n);
+      n.classList.toggle('selected', this.selected.has(card.id));
+      n.classList.toggle('dimmed', dim);
+      this.hand.appendChild(n);           // 已存在的节点会被移动到正确位置，不会重建
     });
+    for (const n of existing.values()) n.remove();
+    this.hand.classList.toggle('interactive', !!selectable);
+    this._fitHand(cards.length);
+  }
+
+  /** 按手牌张数与可用宽度决定叠放间距，保证再多牌也排得下且角标始终露出。 */
+  _fitHand(n) {
+    const first = this.hand.firstElementChild;
+    if (!first || n < 2) { this.hand.style.removeProperty('--overlap'); return; }
+    const cw = first.offsetWidth;
+    const avail = this.hand.clientWidth - 20;
+    const step = Math.max(cw * 0.17, Math.min(cw * 0.48, (avail - cw) / (n - 1)));
+    this.hand.style.setProperty('--overlap', `${Math.round(step - cw)}px`);
   }
 
   refreshSelection() {
