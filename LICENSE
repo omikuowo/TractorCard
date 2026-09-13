@@ -1,0 +1,69 @@
+版权声明 / COPYRIGHT NOTICE
+================================================================
+
+拖拉机大赛 · 网页版（TractorCard）
+Copyright (c) 2026 TractorCard Project.
+版权所有，保留一切权利。All Rights Reserved.
+
+----------------------------------------------------------------
+中文
+----------------------------------------------------------------
+
+本作品（包括但不限于源代码、界面设计、美术素材、文案与文档，
+以下统称“本作品”）的著作权归著作权人所有。
+
+未经著作权人事先书面授权，任何单位或个人不得以任何方式：
+
+  1. 使用、运行、部署本作品或其任何部分；
+  2. 复制、下载、镜像、转载、存档本作品或其任何部分；
+  3. 修改、翻译、改编、二次创作、反向工程本作品；
+  4. 分发、公开传播、出租、出借、出售、再许可本作品；
+  5. 将本作品或其任何部分用于任何商业或非商业用途。
+
+本作品仅在著作权人另行书面授权的范围内方可使用。授权一经作出，
+仅及于授权文件明示的主体、用途、期限与范围，不得扩大解释。
+
+本作品按“现状”提供，著作权人不对其适用性、可靠性或无错误运行
+作出任何明示或默示的担保，亦不对因使用或无法使用本作品所导致的
+任何直接或间接损失承担责任。
+
+----------------------------------------------------------------
+ENGLISH
+----------------------------------------------------------------
+
+All rights in this work — including but not limited to its source
+code, interface design, artwork, text and documentation (the
+"Work") — are reserved by the copyright holder.
+
+NO PERMISSION IS GRANTED to any person or entity to use, run,
+deploy, copy, mirror, archive, modify, translate, adapt, reverse
+engineer, distribute, publicly communicate, rent, lend, sell or
+sublicense the Work or any part of it, for any purpose, commercial
+or non-commercial, WITHOUT THE PRIOR WRITTEN PERMISSION of the
+copyright holder.
+
+Any permission granted applies only to the party, purpose, term and
+scope expressly stated in the written grant.
+
+THE WORK IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
+OR IMPLIED. IN NO EVENT SHALL THE COPYRIGHT HOLDER BE LIABLE FOR ANY
+CLAIM, DAMAGES OR OTHER LIABILITY ARISING FROM THE WORK OR THE USE
+OR OTHER DEALINGS IN THE WORK.
+
+----------------------------------------------------------------
+关于原作 / About the original game
+----------------------------------------------------------------
+
+本作品是《拖拉机大赛》这一民间扑克玩法的独立网页实现。规则文本
+整理自原版游戏随附的帮助文件；本作品未使用原程序的任何代码、
+可执行文件、图像或音频素材，全部代码与美术均为独立制作。
+
+《拖拉机大赛》原程序的名称与相关权利归其各自权利人所有，
+本项目与其权利人无隶属、合作或授权关系。
+
+This is an independent web implementation of the traditional Chinese
+card game commonly known as 拖拉机 ("Tractor" / 升级 / Shengji). No
+code, executable, image or audio asset from any original program has
+been used. Names and rights of any original program belong to their
+respective owners; this project is not affiliated with or endorsed
+by them.

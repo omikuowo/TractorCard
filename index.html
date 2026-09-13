@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>拖拉机大赛 · 网页版</title>
+<meta name="description" content="经典扑克游戏《拖拉机大赛》的网页复刻版，单机四人对战。">
+<!--
+  拖拉机大赛 网页版 (TractorCard)
+  Copyright (c) 2026 TractorCard Project. All rights reserved. 版权所有，保留一切权利。
+  未经著作权人事先书面授权，禁止使用、复制、修改、分发本作品或其任何部分。
+-->
+<link rel="stylesheet" href="styles.css">
+<link rel="icon" href="assets/cards/joker-big.svg">
+</head>
+<body>
+<div id="app">
+
+  <header class="menubar">
+    <div class="brand">拖拉机大赛<span>网页版</span></div>
+    <nav class="menus">
+      <div class="menu" data-menu="game">
+        <button class="menu-title">游戏</button>
+        <ul class="menu-list">
+          <li><button data-action="new-game">开始新游戏<kbd>F2</kbd></button></li>
+          <li><button data-action="save">储存牌局</button></li>
+          <li><button data-action="load">读取牌局</button></li>
+          <li class="sep"></li>
+          <li><button data-action="quit">退出</button></li>
+        </ul>
+      </div>
+      <div class="menu" data-menu="options">
+        <button class="menu-title">选项</button>
+        <ul class="menu-list">
+          <li><button data-action="opt-rules">游戏规则…</button></li>
+          <li><button data-action="opt-difficulty">游戏难度…</button></li>
+          <li><button data-action="opt-speed">游戏速度…</button></li>
+          <li><button data-action="opt-face">牌面图案…</button></li>
+          <li><button data-action="opt-back">牌背面图案…</button></li>
+          <li class="sep"></li>
+          <li><button data-action="toggle-music"><span class="tick" id="tickMusic"></span>音乐</button></li>
+          <li><button data-action="toggle-sound"><span class="tick" id="tickSound"></span>音效</button></li>
+        </ul>
+      </div>
+      <div class="menu" data-menu="help">
+        <button class="menu-title">帮助</button>
+        <ul class="menu-list">
+          <li><button data-action="help">游戏帮助<kbd>F1</kbd></button></li>
+          <li><button data-action="about">版本信息</button></li>
+        </ul>
+      </div>
+    </nav>
+    <div class="status" id="status"></div>
+  </header>
+
+  <main class="table" id="table">
+    <div class="seat seat-north" data-seat="2"><div class="tag"></div><div class="count"></div><div class="played"></div></div>
+    <div class="seat seat-west"  data-seat="1"><div class="tag"></div><div class="count"></div><div class="played"></div></div>
+    <div class="seat seat-east"  data-seat="3"><div class="tag"></div><div class="count"></div><div class="played"></div></div>
+    <div class="seat seat-south" data-seat="0"><div class="tag"></div><div class="count"></div><div class="played"></div></div>
+
+    <div class="centre">
+      <div class="kitty" id="kitty" hidden><div class="kitty-label">底牌</div><div class="kitty-cards"></div></div>
+      <div class="board" id="board"></div>
+      <div class="trick-banner" id="trickBanner" hidden></div>
+    </div>
+
+    <aside class="scoreboard" id="scoreboard"></aside>
+    <div class="declare-bar" id="declareBar" hidden></div>
+  </main>
+
+  <footer class="handbar">
+    <div class="hand" id="hand"></div>
+    <div class="actions">
+      <div class="hint" id="hint"></div>
+      <button class="play-btn" id="playBtn" title="打出所选取的牌">
+        <svg viewBox="0 0 48 48" width="30" height="30" aria-hidden="true"><path d="M17 30V11a3 3 0 0 1 6 0v13m0-3a3 3 0 0 1 6 0v3m0-2a3 3 0 0 1 6 0v4m0-2a3 3 0 0 1 5 0v8c0 6-4 10-10 10h-4c-5 0-7-2-10-6l-6-9a3 3 0 0 1 5-3l4 4" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <span>出牌</span>
+      </button>
+    </div>
+  </footer>
+
+  <p class="copyright">
+    © 2026 TractorCard Project　版权所有，保留一切权利 · All Rights Reserved．
+    未经著作权人事先书面授权，不得使用、复制、修改或分发本作品。
+  </p>
+</div>
+
+<div class="modal-root" id="modalRoot" hidden></div>
+<script type="module" src="src/main.js"></script>
+</body>
+</html>
